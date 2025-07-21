@@ -1,0 +1,20 @@
+name: Auto Upload
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+    - name: Upload code
+      run: |
+        git config --global user.name "reya-porche"
+        git config --global user.email "reyaporche@gmail.com"
+        git add .
+        git commit -m "Auto-update from workflow" || echo "No changes to commit"
+        git push origin main
